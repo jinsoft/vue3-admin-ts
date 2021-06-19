@@ -1,10 +1,25 @@
 <template>
-<div class="container" :class="{ 'sign-up-mode' : signUpModel }">
+  <div class="container" :class="{ 'sign-up-mode': signUpModel }">
     <!-- form表单容器 -->
     <div class="forms-container">
       <div class="signin-signup">
         <!-- 登录 -->
-        
+        <el-form ref="loginFormRef" :model="loginForm" :rules="loginFormRules" label-width="80px">
+          <el-form-item label="账号" prop="name">
+            <el-input v-model="loginForm.name" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="密码" prop="password">
+            <el-input
+              type="password"
+              v-model="loginForm.password"
+              autocomplete="off"
+            ></el-input>
+          </el-form-item>
+
+          <el-form-item>
+            <el-button type="primary" @click="onSubmit">登录</el-button>
+          </el-form-item>
+        </el-form>
       </div>
     </div>
 
@@ -29,16 +44,47 @@
 </template>
 
 <script>
+import { reactive, ref } from "vue";
+import message from "./../utils/message";
+import { login } from './../api/user'
+import router from '@/router';
 export default {
   name: "Login",
   components: {},
   setup() {
-    const signUpModel = Math.random() >= 0.5
+    const signUpModel = Math.random() >= 0.5;
+    const loginFormRef = ref();
+    const loginForm = reactive({
+      name: "",
+      password: "",
+    });
+
+    const loginFormRules = {
+      name: [{ required: true, message: '请填写账号', trigger: 'blur' }],
+      password: [{ required: true, message: '请填写密码', trigger: 'blur' }],
+    };
+
+    function onSubmit() {
+      loginFormRef.value.validate(valid => {
+        console.log(valid);
+        if(!valid) return;
+        router.replace({path:'/dashboard'})
+        // login(loginForm).then(res=>{
+        //   console.log(res);
+        //   router.replace({path:'/dashboard'})
+        // })
+      })
+
+    }
 
     return {
-      signUpModel
-    }
-  }
+      signUpModel,
+      onSubmit,
+      loginForm,
+      loginFormRef,
+      loginFormRules,
+    };
+  },
 };
 </script>
 
