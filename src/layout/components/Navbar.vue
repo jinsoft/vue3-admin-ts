@@ -1,7 +1,7 @@
 <template>
-  <div class="home">
-    <vHeader />
-  </div>
+  <h1>
+    Navbar
+  </h1>
 </template>
 
 <script lang="ts">

@@ -1,7 +1,5 @@
 <template>
-  <div class="home">
-    <vHeader />
-  </div>
+  <h2>siderbar</h2>
 </template>
 
 <script lang="ts">

@@ -1,7 +1,5 @@
 <template>
-  <div class="home">
-    <vHeader />
-  </div>
+<h1>AppMain</h1>
 </template>
 
 <script lang="ts">
